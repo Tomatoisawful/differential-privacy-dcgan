@@ -8,7 +8,7 @@ if (-not (Test-Path -LiteralPath $Python)) {
     throw "Project virtual environment not found: $Python"
 }
 
-& $Python -u (Join-Path $ProjectRoot "src\required\train_dp_dcgan.py") `
+& $Python -u (Join-Path $ProjectRoot "src\dp_dcgan\train_dp_dcgan.py") `
     --data-root (Join-Path $ProjectRoot "data") `
     --output-dir (Join-Path $ProjectRoot "runs\required") `
     --epochs 10 `

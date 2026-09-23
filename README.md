@@ -6,9 +6,7 @@
 2. **改进 1**：DP-ACWGAN-CP，条件生成完整 MNIST 0–9。
 3. **改进 2**：DP-CVAE，分别训练完整 MNIST 0–9 和单独数字 8。
 4. **改进 3**：DP-WGAN-CP，只训练并生成数字 8。
-5. **低预算实验**：在数字 8 上将 DP-CVAE 与 DP-WGAN-CP 的隐私预算限制为 ε<2。
-
-仓库只归档每项实验最终采用的模型、样本、训练记录和评估结果；调参过程中产生的中间模型保留在本地 `runs/`，不上传 GitHub。
+5. **其他对比实验**：在数字 8 上将 DP-CVAE 与 DP-WGAN-CP 的隐私预算限制为 ε<2。
 
 ## 结论
 
@@ -27,18 +25,18 @@ DP-ACWGAN-CP 的类别控制最好，两套评估器均达到 100% 标签一致�
 
 | 模型 / 评估器 | 数字 8 识别率 ↑ | 平均置信度 ↑ | 特征 FID ↓ | ε | 训练时间 |
 |---|---:|---:|---:|---:|---:|
-| 必做 DP-DCGAN / LeNet | **100.00%** | **99.98%** | 865.36 | **1.9324** | **45.59 s** |
+| DP-DCGAN / LeNet | **100.00%** | **99.98%** | 865.36 | **1.9324** | **45.59 s** |
 | DP-CVAE / LeNet | 99.96% | 99.34% | 1124.84 | 7.9944 | 106.53 s |
 | DP-WGAN-CP / LeNet | 97.04% | 97.70% | **309.06** | 7.9985 | 96.36 s |
-| 必做 DP-DCGAN / ConvNet | **100.00%** | 99.84% | 637.83 | **1.9324** | **45.59 s** |
+| DP-DCGAN / ConvNet | **100.00%** | 99.84% | 637.83 | **1.9324** | **45.59 s** |
 | DP-CVAE / ConvNet | **100.00%** | **99.88%** | 463.61 | 7.9944 | 106.53 s |
 | DP-WGAN-CP / ConvNet | 98.30% | 97.52% | **140.15** | 7.9985 | 96.36 s |
 
 结论如下：
 
 - **生成分布质量最好**：DP-WGAN-CP。两套评估器的 FID 都最低，ConvNet FID 仅 140.15。
-- **数字 8 识别最稳定**：DP-CVAE 与必做 DP-DCGAN，ConvNet 识别率均为 100%。
-- **隐私更强且训练最少**：必做 DP-DCGAN，ε=1.9324，且只训练 10 轮。注意它和两个改进模型的隐私预算不同，FID 对比不属于完全相同隐私约束下的消融实验。
+- **数字 8 识别最稳定**：DP-CVAE 与DP-DCGAN，ConvNet 识别率均为 100%。
+- **隐私更强且训练最少**：DP-DCGAN，ε=1.9324，且只训练 10 轮。注意它和两个改进模型的隐私预算不同，FID 对比不属于完全相同隐私约束下的消融实验。
 
 ### 数字 8：ε<2 实验
 
@@ -61,32 +59,38 @@ DP-ACWGAN-CP 的类别控制最好，两套评估器均达到 100% 标签一致�
 differential-privacy-dcgan/
 ├── README.md
 ├── requirements.txt
+├── references/                  # 课程资料与差分隐私参考 PDF
+├── data/                        # MNIST 数据（Git 忽略）
+├── runs/                        # 调参与临时输出（Git 忽略）
 ├── scripts/
 │   └── run_required.ps1
 ├── src/
-│   ├── required/                 # 必做 DP-DCGAN
-│   ├── improved/                 # 0-9 DP-ACWGAN-CP
-│   └── additional/               # DP-CVAE、数字8 DP-WGAN-CP、统一评估器
+│   ├── dp_dcgan/                # 必做 DP-DCGAN
+│   ├── dp_acwgan_cp/            # 0-9 DP-ACWGAN-CP
+│   └── privacy_models/          # DP-CVAE、DP-WGAN-CP、统一评估器
 └── results/
     ├── comparison.csv
-    ├── required/                 # 必做数字8
-    ├── improved/                 # DP-ACWGAN-CP 0-9
-    ├── dp_vae_all/               # DP-CVAE 0-9
-    ├── dp_vae_digit8/            # DP-CVAE 数字8，ε≈8
-    ├── dp_wgan_cp_digit8/        # DP-WGAN-CP 数字8，ε≈8
-    ├── dp_vae_digit8_eps1p9/     # DP-CVAE 数字8，ε<2
-    └── dp_wgan_cp_digit8_eps1p9/ # DP-WGAN-CP 数字8，ε<2
+    ├── evaluators/              # 公共 LeNet 与 ConvNet
+    ├── mnist_0_9/
+    │   ├── dp_acwgan_cp_eps8/
+    │   └── dp_cvae_eps8/
+    └── mnist_digit8/
+        ├── dp_dcgan_eps1p93/
+        ├── dp_cvae_eps8/
+        ├── dp_cvae_eps1p9/
+        ├── dp_wgan_cp_eps8/
+        └── dp_wgan_cp_eps1p9/
 ```
 
 每个新增实验目录包含：
 
-- `model/`：最终发布模型；
+- `model/final.pt`：最终发布模型；
 - `sample/`：最终生成样本；
-- `metrics/training_metrics.csv`：逐轮训练记录；
+- `metrics/training.csv`：逐轮训练记录；
 - `metrics/training_summary.json`：配置、隐私预算和最终训练指标；
 - `metrics/evaluation_*.json`：LeNet 与 ConvNet 的正式评估；
 - `metrics/class_histogram_*.csv`：预测类别分布；
-- `logs/`：最终训练与评估的标准输出日志；动态进度条 stderr 原始文件仅保留在本地 `runs/`。
+- `logs/`：最终训练与评估的标准输出日志；
 
 ## 环境
 
@@ -104,8 +108,6 @@ differential-privacy-dcgan/
 python -m pip install -r .\requirements.txt
 ```
 
-以下命令均在项目根目录执行。数据默认下载到 `data/`，实验过程输出到被 Git 忽略的 `runs/`。
-
 ## 一、必做：DP-SGD + DCGAN（数字 8）
 
 判别器接收真实数字 8 和生成图像。Opacus 对判别器的逐样本梯度裁剪后加入高斯噪声；生成器不直接读取私有数据，只通过私有判别器获得训练信号。
@@ -121,7 +123,7 @@ python -m pip install -r .\requirements.txt
 该模型在 WGAN 权重裁剪基础上加入标签条件、投影判别器、辅助分类头和 EMA 生成器，以解决 0–9 条件生成中的类别模式坍缩。最终模型还使用独立公开分类器进行不访问私有训练样本的后处理，因此额外隐私成本为 0。
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\improved\train_dp_wgan.py `
+.\.venv\Scripts\python.exe .\src\dp_acwgan_cp\train_dp_wgan.py `
   --data-root .\data --output-dir .\runs\improved `
   --epochs 40 --batch-size 128 --latent-size 128 `
   --generator-features 64 --critic-features 32 --critic-steps 3 `
@@ -149,7 +151,7 @@ Opacus 对编码器、解码器和标签条件参数统一执行 DP-SGD。训练
 ### 完整 0–9
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+.\.venv\Scripts\python.exe .\src\privacy_models\train_dp_vae.py `
   --data-root .\data --output-dir .\runs\dp_vae_all `
   --epochs 30 --batch-size 256 --grad-sample-mode ghost `
   --latent-size 64 --features 32 --prior-scale 10 `
@@ -163,7 +165,7 @@ Opacus 对编码器、解码器和标签条件参数统一执行 DP-SGD。训练
 ### 单独数字 8
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+.\.venv\Scripts\python.exe .\src\privacy_models\train_dp_vae.py `
   --data-root .\data --output-dir .\runs\dp_vae_digit8 `
   --target-digit 8 --epochs 40 --batch-size 128 `
   --grad-sample-mode ghost --latent-size 64 --features 32 `
@@ -180,7 +182,7 @@ Opacus 对编码器、解码器和标签条件参数统一执行 DP-SGD。训练
 Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满足近似 Lipschitz 约束。DP-SGD 只作用于读取私有数字 8 的 Critic；生成器通过 Critic 的输出间接学习，因此隐私保证经后处理性质传递给生成器。
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\additional\train_dp_wgan_cp_digit8.py `
+.\.venv\Scripts\python.exe .\src\privacy_models\train_dp_wgan_cp_digit8.py `
   --data-root .\data --output-dir .\runs\dp_wgan_cp_digit8 `
   --target-digit 8 --epochs 50 --batch-size 128 `
   --latent-size 128 --generator-features 64 --critic-features 32 `
@@ -198,7 +200,7 @@ Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满
 
 ```powershell
 # DP-CVAE
-.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+.\.venv\Scripts\python.exe .\src\privacy_models\train_dp_vae.py `
   --data-root .\data --output-dir .\runs\dp_vae_digit8_eps1p9 `
   --target-digit 8 --epochs 40 --batch-size 128 `
   --grad-sample-mode ghost --latent-size 64 --features 32 `
@@ -208,7 +210,7 @@ Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满
   --seed 2026 --device cuda
 
 # DP-WGAN-CP
-.\.venv\Scripts\python.exe .\src\additional\train_dp_wgan_cp_digit8.py `
+.\.venv\Scripts\python.exe .\src\privacy_models\train_dp_wgan_cp_digit8.py `
   --data-root .\data --output-dir .\runs\dp_wgan_cp_digit8_eps1p9 `
   --target-digit 8 --epochs 50 --batch-size 128 `
   --latent-size 128 --generator-features 64 --critic-features 32 `
@@ -227,10 +229,10 @@ Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满
 以数字 8 的 DP-WGAN-CP 和 ConvNet 为例：
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\additional\evaluate_generator.py `
-  --checkpoint .\results\dp_wgan_cp_digit8\model\dp_wgan_cp_digit8_final.pt `
+.\.venv\Scripts\python.exe .\src\privacy_models\evaluate_generator.py `
+  --checkpoint .\results\mnist_digit8\dp_wgan_cp_eps8\model\final.pt `
   --model-type dp_wgan_cp --task single --target-digit 8 `
-  --evaluator-checkpoint .\results\improved\evaluators\convnet_mnist_best.pt `
+  --evaluator-checkpoint .\results\evaluators\convnet_mnist_best.pt `
   --data-root .\data --output-dir .\runs\evaluation `
   --num-samples 10000 --num-real 10000 `
   --batch-size 256 --device cuda
@@ -253,24 +255,24 @@ FID 只能在相同任务、相同评估器、相同预处理和样本数量下�
 
 DP-CVAE（0–9）：
 
-![DP-CVAE MNIST 0-9](results/dp_vae_all/sample/generated.png)
+![DP-CVAE MNIST 0-9](results/mnist_0_9/dp_cvae_eps8/sample/generated.png)
 
 必做 DP-DCGAN（数字 8）：
 
-![DP-DCGAN digit 8](results/required/sample/generated.png)
+![DP-DCGAN digit 8](results/mnist_digit8/dp_dcgan_eps1p93/sample/generated.png)
 
 DP-CVAE（数字 8）：
 
-![DP-CVAE digit 8](results/dp_vae_digit8/sample/generated.png)
+![DP-CVAE digit 8](results/mnist_digit8/dp_cvae_eps8/sample/generated.png)
 
 DP-WGAN-CP（数字 8）：
 
-![DP-WGAN-CP digit 8](results/dp_wgan_cp_digit8/sample/generated.png)
+![DP-WGAN-CP digit 8](results/mnist_digit8/dp_wgan_cp_eps8/sample/generated.png)
 
 DP-CVAE（数字 8，ε<2）：
 
-![DP-CVAE digit 8 epsilon under 2](results/dp_vae_digit8_eps1p9/sample/generated.png)
+![DP-CVAE digit 8 epsilon under 2](results/mnist_digit8/dp_cvae_eps1p9/sample/generated.png)
 
 DP-WGAN-CP（数字 8，ε<2）：
 
-![DP-WGAN-CP digit 8 epsilon under 2](results/dp_wgan_cp_digit8_eps1p9/sample/generated.png)
+![DP-WGAN-CP digit 8 epsilon under 2](results/mnist_digit8/dp_wgan_cp_eps1p9/sample/generated.png)
