@@ -1,0 +1,73 @@
+{"algorithm": "DP-WGAN-CP", "dataset": "MNIST digit 8", "dataset_size": 5851, "noise_multiplier": 2.490234375, "device": "cuda"}
+{"epoch": 1, "critic_loss": -0.0067591661911295805, "generator_loss": -0.0009511361820235228, "wasserstein_estimate": 0.0067591661911295805, "clip_boundary_fraction": 0.04919821259662739, "epsilon": 0.2570566436251806, "duration_seconds": 2.872180461883545}
+{"epoch": 2, "critic_loss": -0.007964823982151955, "generator_loss": -0.0031709256737182537, "wasserstein_estimate": 0.007964823982151955, "clip_boundary_fraction": 0.020263283212107387, "epsilon": 0.35625744464200054, "duration_seconds": 2.702033281326294}
+{"epoch": 3, "critic_loss": -0.008146976211877622, "generator_loss": -0.005387502897065133, "wasserstein_estimate": 0.008146976211877622, "clip_boundary_fraction": 0.016534264000782804, "epsilon": 0.4358009700975798, "duration_seconds": 1.9604239463806152}
+{"epoch": 4, "critic_loss": -0.007030899919893431, "generator_loss": -0.008962928379575411, "wasserstein_estimate": 0.007030899919893431, "clip_boundary_fraction": 0.014582993574480575, "epsilon": 0.5038026196552732, "duration_seconds": 1.952831506729126}
+{"epoch": 5, "critic_loss": -0.005244258993669697, "generator_loss": -0.01214617354174455, "wasserstein_estimate": 0.005244258993669697, "clip_boundary_fraction": 0.013438403079030626, "epsilon": 0.5643406944353697, "duration_seconds": 2.418851613998413}
+{"epoch": 6, "critic_loss": -0.00273704814279209, "generator_loss": -0.015505397692322731, "wasserstein_estimate": 0.00273704814279209, "clip_boundary_fraction": 0.012844515476695259, "epsilon": 0.6195830225043873, "duration_seconds": 1.8458902835845947}
+{"epoch": 7, "critic_loss": 0.00023745879044999248, "generator_loss": -0.018467588101824126, "wasserstein_estimate": -0.00023745879044999248, "clip_boundary_fraction": 0.012178218467660392, "epsilon": 0.6707777322341459, "duration_seconds": 1.9791193008422852}
+{"epoch": 8, "critic_loss": 0.0010601015478048635, "generator_loss": -0.01773223193983237, "wasserstein_estimate": -0.0010601015478048635, "clip_boundary_fraction": 0.011654391858834275, "epsilon": 0.7188055388790188, "duration_seconds": 1.863781213760376}
+{"epoch": 9, "critic_loss": 0.0012503179883503396, "generator_loss": -0.0151086620753631, "wasserstein_estimate": -0.0012503179883503396, "clip_boundary_fraction": 0.01124289768094197, "epsilon": 0.7640419267483726, "duration_seconds": 2.0706379413604736}
+{"epoch": 10, "critic_loss": 0.001365921925753355, "generator_loss": -0.013932795201738676, "wasserstein_estimate": -0.001365921925753355, "clip_boundary_fraction": 0.01083779640562315, "epsilon": 0.8071983241370542, "duration_seconds": 2.16567063331604}
+{"epoch": 11, "critic_loss": 0.0018943022815105708, "generator_loss": -0.014353626469771067, "wasserstein_estimate": -0.0018943022815105708, "clip_boundary_fraction": 0.01038859714928732, "epsilon": 0.8482201534031133, "duration_seconds": 1.8712267875671387}
+{"epoch": 12, "critic_loss": 0.002492073801872523, "generator_loss": -0.01361544121755287, "wasserstein_estimate": -0.002492073801872523, "clip_boundary_fraction": 0.010196549137284322, "epsilon": 0.887518057910041, "duration_seconds": 1.889986276626587}
+{"epoch": 13, "critic_loss": 0.002460876257037339, "generator_loss": -0.013179285079240799, "wasserstein_estimate": -0.002460876257037339, "clip_boundary_fraction": 0.01009582830490231, "epsilon": 0.9257421721203493, "duration_seconds": 1.8350510597229004}
+{"epoch": 14, "critic_loss": 0.0020977699845705342, "generator_loss": -0.011893494551380475, "wasserstein_estimate": -0.0020977699845705342, "clip_boundary_fraction": 0.00967728888743925, "epsilon": 0.9623338293794036, "duration_seconds": 1.6605088710784912}
+{"epoch": 15, "critic_loss": 0.0018125738361445458, "generator_loss": -0.010255374771077186, "wasserstein_estimate": -0.0018125738361445458, "clip_boundary_fraction": 0.009413614273133501, "epsilon": 0.9979599858848112, "duration_seconds": 1.8180723190307617}
+{"epoch": 16, "critic_loss": 0.0021104059364322734, "generator_loss": -0.009138957845667999, "wasserstein_estimate": -0.0021104059364322734, "clip_boundary_fraction": 0.009290974917642456, "epsilon": 1.032366825894419, "duration_seconds": 1.9356698989868164}
+{"epoch": 17, "critic_loss": 0.0023041506115671086, "generator_loss": -0.010215368308126926, "wasserstein_estimate": -0.0023041506115671086, "clip_boundary_fraction": 0.00913950226687107, "epsilon": 1.066259222233374, "duration_seconds": 1.8445103168487549}
+{"epoch": 18, "critic_loss": 0.002229616481243916, "generator_loss": -0.009891043358948082, "wasserstein_estimate": -0.002229616481243916, "clip_boundary_fraction": 0.009005512247627124, "epsilon": 1.0985009061856632, "duration_seconds": 1.8947646617889404}
+{"epoch": 19, "critic_loss": 0.002006247123379422, "generator_loss": -0.008176787259678046, "wasserstein_estimate": -0.002006247123379422, "clip_boundary_fraction": 0.008922926383769857, "epsilon": 1.1307425901379524, "duration_seconds": 1.6958811283111572}
+{"epoch": 20, "critic_loss": 0.0015107096253853777, "generator_loss": -0.006491291802376509, "wasserstein_estimate": -0.0015107096253853777, "clip_boundary_fraction": 0.0087574937212564, "epsilon": 1.1618431074674402, "duration_seconds": 1.8020880222320557}
+{"epoch": 21, "critic_loss": 0.0009875375898959844, "generator_loss": -0.005703060160158202, "wasserstein_estimate": -0.0009875375898959844, "clip_boundary_fraction": 0.008556182523891842, "epsilon": 1.1919389233299167, "duration_seconds": 1.7818548679351807}
+{"epoch": 22, "critic_loss": 0.0008752851585007232, "generator_loss": -0.006762638439734777, "wasserstein_estimate": -0.0008752851585007232, "clip_boundary_fraction": 0.008435369711993214, "epsilon": 1.2220347391923936, "duration_seconds": 1.7952566146850586}
+{"epoch": 23, "critic_loss": 0.0013294111552607753, "generator_loss": -0.007600737145791451, "wasserstein_estimate": -0.0013294111552607753, "clip_boundary_fraction": 0.008271241723474347, "epsilon": 1.2517813724482647, "duration_seconds": 1.7875876426696777}
+{"epoch": 24, "critic_loss": 0.001771128625082581, "generator_loss": -0.009578042780049145, "wasserstein_estimate": -0.001771128625082581, "clip_boundary_fraction": 0.008191134740206793, "epsilon": 1.27975024651004, "duration_seconds": 1.7977869510650635}
+{"epoch": 25, "critic_loss": 0.0027704119540589013, "generator_loss": -0.010374218846360842, "wasserstein_estimate": -0.0027704119540589013, "clip_boundary_fraction": 0.007925633582308623, "epsilon": 1.3077191205718157, "duration_seconds": 1.9092433452606201}
+{"epoch": 26, "critic_loss": 0.0021146544781715975, "generator_loss": -0.008196515496820211, "wasserstein_estimate": -0.0021146544781715975, "clip_boundary_fraction": 0.007873577089924656, "epsilon": 1.3356879946335911, "duration_seconds": 1.8008008003234863}
+{"epoch": 27, "critic_loss": 0.0019109767922402723, "generator_loss": -0.007186313800048083, "wasserstein_estimate": -0.0019109767922402723, "clip_boundary_fraction": 0.007932026484882091, "epsilon": 1.3636568686953667, "duration_seconds": 1.7275512218475342}
+{"epoch": 28, "critic_loss": 0.002260587269278324, "generator_loss": -0.007305958773940802, "wasserstein_estimate": -0.002260587269278324, "clip_boundary_fraction": 0.0078948432760364, "epsilon": 1.38971618932507, "duration_seconds": 1.8048758506774902}
+{"epoch": 29, "critic_loss": 0.0016707553042341833, "generator_loss": -0.007011261365065972, "wasserstein_estimate": -0.0016707553042341833, "clip_boundary_fraction": 0.007835480609282755, "epsilon": 1.4155766972312445, "duration_seconds": 1.6747794151306152}
+{"epoch": 30, "critic_loss": 0.0011084242015267196, "generator_loss": -0.0072331209667027, "wasserstein_estimate": -0.0011084242015267196, "clip_boundary_fraction": 0.007655696532828859, "epsilon": 1.4414372051374187, "duration_seconds": 1.8073067665100098}
+{"epoch": 31, "critic_loss": 0.0008956235428543195, "generator_loss": -0.007525769186516603, "wasserstein_estimate": -0.0008956235428543195, "clip_boundary_fraction": 0.007509051175837435, "epsilon": 1.4672977130435931, "duration_seconds": 1.646327257156372}
+{"epoch": 32, "critic_loss": 0.0016696528511364822, "generator_loss": -0.008621501798431078, "wasserstein_estimate": -0.0016696528511364822, "clip_boundary_fraction": 0.0075479304608760895, "epsilon": 1.4931582209497676, "duration_seconds": 1.724017858505249}
+{"epoch": 33, "critic_loss": 0.0018578522494467704, "generator_loss": -0.008581643633078784, "wasserstein_estimate": -0.0018578522494467704, "clip_boundary_fraction": 0.007413027169835937, "epsilon": 1.5181400572523278, "duration_seconds": 1.912670373916626}
+{"epoch": 34, "critic_loss": 0.0015471713394736466, "generator_loss": -0.00815271573762099, "wasserstein_estimate": -0.0015471713394736466, "clip_boundary_fraction": 0.0072594670406732125, "epsilon": 1.5419104345566785, "duration_seconds": 1.827028512954712}
+{"epoch": 35, "critic_loss": 0.001340865987636473, "generator_loss": -0.007261866672585408, "wasserstein_estimate": -0.001340865987636473, "clip_boundary_fraction": 0.007032845167813695, "epsilon": 1.5656808118610293, "duration_seconds": 1.7693030834197998}
+{"epoch": 36, "critic_loss": 0.001061735087600739, "generator_loss": -0.007351217675022781, "wasserstein_estimate": -0.001061735087600739, "clip_boundary_fraction": 0.007147265077138849, "epsilon": 1.58945118916538, "duration_seconds": 1.7883937358856201}
+{"epoch": 37, "critic_loss": 0.0007293153574447269, "generator_loss": -0.007530798794080814, "wasserstein_estimate": -0.0007293153574447269, "clip_boundary_fraction": 0.006974656707655175, "epsilon": 1.6132215664697307, "duration_seconds": 1.822951078414917}
+{"epoch": 38, "critic_loss": 0.0015449708773066168, "generator_loss": -0.00869717113673687, "wasserstein_estimate": -0.0015449708773066168, "clip_boundary_fraction": 0.007109038129097491, "epsilon": 1.6369919437740814, "duration_seconds": 1.7529008388519287}
+{"epoch": 39, "critic_loss": 0.001962447913525545, "generator_loss": -0.0080669776070863, "wasserstein_estimate": -0.001962447913525545, "clip_boundary_fraction": 0.006994748687171789, "epsilon": 1.6607623210784321, "duration_seconds": 1.732980728149414}
+{"epoch": 40, "critic_loss": 0.0016461170744150877, "generator_loss": -0.006784323944399754, "wasserstein_estimate": -0.0016461170744150877, "clip_boundary_fraction": 0.00691620731269774, "epsilon": 1.6845326983827829, "duration_seconds": 1.761652946472168}
+{"epoch": 41, "critic_loss": 0.001385621007774835, "generator_loss": -0.006164228419462839, "wasserstein_estimate": -0.001385621007774835, "clip_boundary_fraction": 0.006855018102351676, "epsilon": 1.7065725496361384, "duration_seconds": 1.873807430267334}
+{"epoch": 42, "critic_loss": 0.0018825771125114482, "generator_loss": -0.007459331827703863, "wasserstein_estimate": -0.0018825771125114482, "clip_boundary_fraction": 0.006819791904497863, "epsilon": 1.7280644517878967, "duration_seconds": 1.8793549537658691}
+{"epoch": 43, "critic_loss": 0.0018069280473434408, "generator_loss": -0.007985419531663259, "wasserstein_estimate": -0.0018069280473434408, "clip_boundary_fraction": 0.006624090805310022, "epsilon": 1.749556353939655, "duration_seconds": 1.7969138622283936}
+{"epoch": 44, "critic_loss": 0.0010354657373998475, "generator_loss": -0.008060953579843044, "wasserstein_estimate": -0.0010354657373998475, "clip_boundary_fraction": 0.006599693401611273, "epsilon": 1.7710482560914134, "duration_seconds": 1.6909682750701904}
+{"epoch": 45, "critic_loss": 0.0004789954577775105, "generator_loss": -0.007959452806971967, "wasserstein_estimate": -0.0004789954577775105, "clip_boundary_fraction": 0.006534459701881993, "epsilon": 1.7925401582431717, "duration_seconds": 1.8511097431182861}
+{"epoch": 46, "critic_loss": 0.0017135956668821366, "generator_loss": -0.009030362280706564, "wasserstein_estimate": -0.0017135956668821366, "clip_boundary_fraction": 0.006575556932711439, "epsilon": 1.8139618024715707, "duration_seconds": 1.7085444927215576}
+{"epoch": 47, "critic_loss": 0.0016669788823017607, "generator_loss": -0.007982197310775518, "wasserstein_estimate": -0.0016669788823017607, "clip_boundary_fraction": 0.006525457451319353, "epsilon": 1.8351832771226875, "duration_seconds": 1.7272837162017822}
+{"epoch": 48, "critic_loss": 0.001300452924940897, "generator_loss": -0.0071114859892986715, "wasserstein_estimate": -0.001300452924940897, "clip_boundary_fraction": 0.006557030561988323, "epsilon": 1.8562116542296407, "duration_seconds": 1.8901429176330566}
+{"epoch": 49, "critic_loss": 0.0011158769687070794, "generator_loss": -0.006973908810565869, "wasserstein_estimate": -0.0011158769687070794, "clip_boundary_fraction": 0.0063507616034443395, "epsilon": 1.8770542867714048, "duration_seconds": 1.6105947494506836}
+{"epoch": 50, "critic_loss": 0.001190160482150057, "generator_loss": -0.007455742762734492, "wasserstein_estimate": -0.001190160482150057, "clip_boundary_fraction": 0.006218206725594443, "epsilon": 1.897718823925472, "duration_seconds": 1.74107027053833}
+{
+  "status": "completed",
+  "algorithm": "DP-WGAN-CP",
+  "dataset": "MNIST digit 8",
+  "dataset_size": 5851,
+  "epochs": 50,
+  "batch_size": 128,
+  "epsilon": 1.897718823925472,
+  "delta": 1e-05,
+  "noise_multiplier": 2.490234375,
+  "weight_clip": 0.02,
+  "total_duration_seconds": 94.80340528488159,
+  "final_training_metrics": {
+    "epoch": 50,
+    "critic_loss": 0.001190160482150057,
+    "generator_loss": -0.007455742762734492,
+    "wasserstein_estimate": -0.001190160482150057,
+    "clip_boundary_fraction": 0.006218206725594443,
+    "epsilon": 1.897718823925472,
+    "duration_seconds": 1.74107027053833
+  }
+}

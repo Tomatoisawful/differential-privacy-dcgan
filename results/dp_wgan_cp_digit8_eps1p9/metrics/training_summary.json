@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "algorithm": "DP-WGAN-CP",
+  "dataset": "MNIST digit 8",
+  "dataset_size": 5851,
+  "epochs": 50,
+  "batch_size": 128,
+  "epsilon": 1.897718823925472,
+  "delta": 1e-05,
+  "noise_multiplier": 2.490234375,
+  "weight_clip": 0.02,
+  "total_duration_seconds": 94.80340528488159,
+  "final_training_metrics": {
+    "epoch": 50,
+    "critic_loss": 0.001190160482150057,
+    "generator_loss": -0.007455742762734492,
+    "wasserstein_estimate": -0.001190160482150057,
+    "clip_boundary_fraction": 0.006218206725594443,
+    "epsilon": 1.897718823925472,
+    "duration_seconds": 1.74107027053833
+  }
+}

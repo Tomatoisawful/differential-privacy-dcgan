@@ -6,6 +6,7 @@
 2. **改进 1**：DP-ACWGAN-CP，条件生成完整 MNIST 0–9。
 3. **改进 2**：DP-CVAE，分别训练完整 MNIST 0–9 和单独数字 8。
 4. **改进 3**：DP-WGAN-CP，只训练并生成数字 8。
+5. **低预算实验**：在数字 8 上将 DP-CVAE 与 DP-WGAN-CP 的隐私预算限制为 ε<2。
 
 仓库只归档每项实验最终采用的模型、样本、训练记录和评估结果；调参过程中产生的中间模型保留在本地 `runs/`，不上传 GitHub。
 
@@ -39,6 +40,19 @@ DP-ACWGAN-CP 的类别控制最好，两套评估器均达到 100% 标签一致�
 - **数字 8 识别最稳定**：DP-CVAE 与必做 DP-DCGAN，ConvNet 识别率均为 100%。
 - **隐私更强且训练最少**：必做 DP-DCGAN，ε=1.9324，且只训练 10 轮。注意它和两个改进模型的隐私预算不同，FID 对比不属于完全相同隐私约束下的消融实验。
 
+### 数字 8：ε<2 实验
+
+两种模型均以目标 ε=1.9、δ=1e-5 重新训练，其余核心结构和训练轮数与 ε≈8 的版本保持一致。
+
+| 模型 / 评估器 | 数字 8 识别率 ↑ | 平均置信度 ↑ | 特征 FID ↓ | 实际 ε | 噪声乘数 |
+|---|---:|---:|---:|---:|---:|
+| DP-CVAE / LeNet | 99.99% | 98.26% | 1539.17 | 1.8995 | 2.2559 |
+| DP-WGAN-CP / LeNet | 100.00% | 100.00% | **690.92** | 1.8977 | 2.4902 |
+| DP-CVAE / ConvNet | 100.00% | 99.89% | **599.53** | 1.8995 | 2.2559 |
+| DP-WGAN-CP / ConvNet | 100.00% | 100.00% | 904.18 | 1.8977 | 2.4902 |
+
+识别率在低预算下仍然接近 100%，但这不代表生成质量没有下降。DP-CVAE 的 ConvNet FID 由 463.61 上升到 599.53；DP-WGAN-CP 的 ConvNet FID 由 140.15 上升到 904.18，而且样本出现明显重复。说明 ε≈1.9 时的额外噪声显著削弱了 WGAN Critic 的有效训练信号。低预算 DP-CVAE 的视觉多样性和 ConvNet FID 更稳健；两种评估器对低预算模型的 FID 排序不同，因此报告同时保留两套结果。
+
 完整机器可读对比见 `results/comparison.csv`。
 
 ## 目录结构
@@ -58,8 +72,10 @@ differential-privacy-dcgan/
     ├── required/                 # 必做数字8
     ├── improved/                 # DP-ACWGAN-CP 0-9
     ├── dp_vae_all/               # DP-CVAE 0-9
-    ├── dp_vae_digit8/            # DP-CVAE 数字8
-    └── dp_wgan_cp_digit8/        # DP-WGAN-CP 数字8
+    ├── dp_vae_digit8/            # DP-CVAE 数字8，ε≈8
+    ├── dp_wgan_cp_digit8/        # DP-WGAN-CP 数字8，ε≈8
+    ├── dp_vae_digit8_eps1p9/     # DP-CVAE 数字8，ε<2
+    └── dp_wgan_cp_digit8_eps1p9/ # DP-WGAN-CP 数字8，ε<2
 ```
 
 每个新增实验目录包含：
@@ -176,7 +192,35 @@ Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满
 
 正式运行：50 epoch，ε=7.99852，训练 96.36 秒。
 
-## 五、统一评估流程
+## 五、ε<2 的数字 8 实验
+
+低预算实验沿用上述命令，只需分别把输出目录改为新目录，并将 `--target-epsilon` 改为 `1.9`：
+
+```powershell
+# DP-CVAE
+.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+  --data-root .\data --output-dir .\runs\dp_vae_digit8_eps1p9 `
+  --target-digit 8 --epochs 40 --batch-size 128 `
+  --grad-sample-mode ghost --latent-size 64 --features 32 `
+  --prior-scale 10 --learning-rate 0.001 --beta 0.05 `
+  --kl-warmup-epochs 8 --ema-decay 0.99 `
+  --target-epsilon 1.9 --delta 1e-5 --max-grad-norm 1 `
+  --seed 2026 --device cuda
+
+# DP-WGAN-CP
+.\.venv\Scripts\python.exe .\src\additional\train_dp_wgan_cp_digit8.py `
+  --data-root .\data --output-dir .\runs\dp_wgan_cp_digit8_eps1p9 `
+  --target-digit 8 --epochs 50 --batch-size 128 `
+  --latent-size 128 --generator-features 64 --critic-features 32 `
+  --generator-lr 0.0001 --critic-lr 0.00005 `
+  --critic-steps 3 --weight-clip 0.02 --ema-decay 0.99 `
+  --target-epsilon 1.9 --delta 1e-5 --max-grad-norm 1 `
+  --seed 2026 --device cuda
+```
+
+正式运行结果：DP-CVAE 实际 ε=1.89950、训练 114.73 秒；DP-WGAN-CP 实际 ε=1.89772、训练 94.80 秒。
+
+## 六、统一评估流程
 
 正式评估均生成 10,000 张图像，随机种子为 2026，并分别使用 LeNet 与独立 ConvNet。0–9 模型的 FID 参考 10,000 张 MNIST 测试图；数字 8 模型参考测试集中全部 974 张数字 8。
 
@@ -222,3 +266,11 @@ DP-CVAE（数字 8）：
 DP-WGAN-CP（数字 8）：
 
 ![DP-WGAN-CP digit 8](results/dp_wgan_cp_digit8/sample/generated.png)
+
+DP-CVAE（数字 8，ε<2）：
+
+![DP-CVAE digit 8 epsilon under 2](results/dp_vae_digit8_eps1p9/sample/generated.png)
+
+DP-WGAN-CP（数字 8，ε<2）：
+
+![DP-WGAN-CP digit 8 epsilon under 2](results/dp_wgan_cp_digit8_eps1p9/sample/generated.png)

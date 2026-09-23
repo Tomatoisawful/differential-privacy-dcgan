@@ -1,0 +1,65 @@
+{"algorithm": "DP-CVAE", "dataset": "MNIST digit 8", "dataset_size": 5851, "device": "cuda", "noise_multiplier": 2.255859375}
+{"epoch": 1, "loss": 0.5291608606379831, "reconstruction_loss": 0.5229709099999184, "kl_loss": 0.9903928622961898, "beta": 0.00625, "epsilon": 0.2999002209823831, "duration_seconds": 3.7738893032073975}
+{"epoch": 2, "loss": 0.33845963037642923, "reconstruction_loss": 0.32648706525711757, "kl_loss": 0.957805619867503, "beta": 0.0125, "epsilon": 0.4057329916699794, "duration_seconds": 2.4413726329803467}
+{"epoch": 3, "loss": 0.28975126721293726, "reconstruction_loss": 0.28002254219851264, "kl_loss": 0.5188655089810006, "beta": 0.018750000000000003, "epsilon": 0.49500224343942323, "duration_seconds": 3.841106414794922}
+{"epoch": 4, "loss": 0.2748816565764561, "reconstruction_loss": 0.2672550432863762, "kl_loss": 0.3050643485080396, "beta": 0.025, "epsilon": 0.5714818054381805, "duration_seconds": 2.956911087036133}
+{"epoch": 5, "loss": 0.26814983564972245, "reconstruction_loss": 0.2618700341374751, "kl_loss": 0.20095372924228588, "beta": 0.03125, "epsilon": 0.639463634974847, "duration_seconds": 2.8577802181243896}
+{"epoch": 6, "loss": 0.26083581749240076, "reconstruction_loss": 0.25516466639897234, "kl_loss": 0.15123048646817794, "beta": 0.037500000000000006, "epsilon": 0.7016664257277916, "duration_seconds": 3.1013755798339844}
+{"epoch": 7, "loss": 0.25862334990987973, "reconstruction_loss": 0.25277679728812913, "kl_loss": 0.13363558743275752, "beta": 0.043750000000000004, "epsilon": 0.7591030541803957, "duration_seconds": 3.221170425415039}
+{"epoch": 8, "loss": 0.25574078671531575, "reconstruction_loss": 0.2496305694264814, "kl_loss": 0.12220437713891022, "beta": 0.05, "epsilon": 0.8129758575759956, "duration_seconds": 3.165595769882202}
+{"epoch": 9, "loss": 0.2538158579103006, "reconstruction_loss": 0.24769470293444165, "kl_loss": 0.12242308099453886, "beta": 0.05, "epsilon": 0.8639528318972083, "duration_seconds": 2.562702178955078}
+{"epoch": 10, "loss": 0.25151773128989297, "reconstruction_loss": 0.245285010032012, "kl_loss": 0.1246544073645957, "beta": 0.05, "epsilon": 0.9126139061765614, "duration_seconds": 2.3430027961730957}
+{"epoch": 11, "loss": 0.24917915605072283, "reconstruction_loss": 0.2428272234272753, "kl_loss": 0.12703861301780767, "beta": 0.05, "epsilon": 0.9588702340189531, "duration_seconds": 2.3690335750579834}
+{"epoch": 12, "loss": 0.24913996350284412, "reconstruction_loss": 0.24211210236264202, "kl_loss": 0.14055716179010766, "beta": 0.05, "epsilon": 1.0030957066440243, "duration_seconds": 2.2589187622070312}
+{"epoch": 13, "loss": 0.24704303466900238, "reconstruction_loss": 0.2396700979389446, "kl_loss": 0.14745874283780092, "beta": 0.05, "epsilon": 1.0465322333859686, "duration_seconds": 2.300311803817749}
+{"epoch": 14, "loss": 0.24533483034234843, "reconstruction_loss": 0.23838567442615774, "kl_loss": 0.13898307125474577, "beta": 0.05, "epsilon": 1.087251258156745, "duration_seconds": 2.387540817260742}
+{"epoch": 15, "loss": 0.24399176431358408, "reconstruction_loss": 0.23700126124971854, "kl_loss": 0.1398100190165135, "beta": 0.05, "epsilon": 1.1279013055219083, "duration_seconds": 2.392146110534668}
+{"epoch": 16, "loss": 0.2439685716481299, "reconstruction_loss": 0.2365602726370045, "kl_loss": 0.14816596298743032, "beta": 0.05, "epsilon": 1.1662634663455402, "duration_seconds": 2.332996368408203}
+{"epoch": 17, "loss": 0.24253919090566628, "reconstruction_loss": 0.2348754683130862, "kl_loss": 0.15327445152744318, "beta": 0.05, "epsilon": 1.2041595086035175, "duration_seconds": 2.511850595474243}
+{"epoch": 18, "loss": 0.24095218997284829, "reconstruction_loss": 0.23299171327626522, "kl_loss": 0.15920956102560874, "beta": 0.05, "epsilon": 1.241623863494326, "duration_seconds": 2.5613784790039062}
+{"epoch": 19, "loss": 0.24137525394359466, "reconstruction_loss": 0.23336600030626853, "kl_loss": 0.1601851206540274, "beta": 0.05, "epsilon": 1.2767975631869313, "duration_seconds": 2.4140822887420654}
+{"epoch": 20, "loss": 0.24008311801342694, "reconstruction_loss": 0.23190078204543527, "kl_loss": 0.16364670382398874, "beta": 0.05, "epsilon": 1.3119712628795368, "duration_seconds": 2.732654571533203}
+{"epoch": 21, "loss": 0.238689604578249, "reconstruction_loss": 0.23062996076559109, "kl_loss": 0.161192892978418, "beta": 0.05, "epsilon": 1.347144962572142, "duration_seconds": 2.8798060417175293}
+{"epoch": 22, "loss": 0.23905969287605802, "reconstruction_loss": 0.23062084829140173, "kl_loss": 0.1687768830745884, "beta": 0.05, "epsilon": 1.3802312804211905, "duration_seconds": 3.1250765323638916}
+{"epoch": 23, "loss": 0.23698168966468985, "reconstruction_loss": 0.2286287939168949, "kl_loss": 0.16705786206468415, "beta": 0.05, "epsilon": 1.4127135218970541, "duration_seconds": 4.024273633956909}
+{"epoch": 24, "loss": 0.23788194541354443, "reconstruction_loss": 0.2294525731616298, "kl_loss": 0.16858749882118274, "beta": 0.05, "epsilon": 1.4451957633729178, "duration_seconds": 2.9584717750549316}
+{"epoch": 25, "loss": 0.23717001272164545, "reconstruction_loss": 0.22860722997716676, "kl_loss": 0.17125568230892776, "beta": 0.05, "epsilon": 1.4776780048487814, "duration_seconds": 3.5801403522491455}
+{"epoch": 26, "loss": 0.23608190899348028, "reconstruction_loss": 0.2271876537612512, "kl_loss": 0.1778851091084533, "beta": 0.05, "epsilon": 1.5090615506153087, "duration_seconds": 2.6897881031036377}
+{"epoch": 27, "loss": 0.23580470245418603, "reconstruction_loss": 0.22684248289828454, "kl_loss": 0.17924436475815292, "beta": 0.05, "epsilon": 1.5388824715540224, "duration_seconds": 2.8688509464263916}
+{"epoch": 28, "loss": 0.23449664429733638, "reconstruction_loss": 0.22531245355676918, "kl_loss": 0.18368375484633268, "beta": 0.05, "epsilon": 1.568703392492736, "duration_seconds": 2.894704580307007}
+{"epoch": 29, "loss": 0.2341684716695484, "reconstruction_loss": 0.22492481462063108, "kl_loss": 0.1848731145744898, "beta": 0.05, "epsilon": 1.5985243134314497, "duration_seconds": 2.5229804515838623}
+{"epoch": 30, "loss": 0.23288698825260953, "reconstruction_loss": 0.2236856761834227, "kl_loss": 0.18402622545937455, "beta": 0.05, "epsilon": 1.6283452343701634, "duration_seconds": 2.8177595138549805}
+{"epoch": 31, "loss": 0.23281836979096227, "reconstruction_loss": 0.22337527640887206, "kl_loss": 0.18886185275075879, "beta": 0.05, "epsilon": 1.6581661553088771, "duration_seconds": 2.9353325366973877}
+{"epoch": 32, "loss": 0.23250795838680238, "reconstruction_loss": 0.2231475619932626, "kl_loss": 0.18720787648007373, "beta": 0.05, "epsilon": 1.6870820807592306, "duration_seconds": 2.5469980239868164}
+{"epoch": 33, "loss": 0.23252904407199193, "reconstruction_loss": 0.22290210888850553, "kl_loss": 0.19253870303521375, "beta": 0.05, "epsilon": 1.7140095032387674, "duration_seconds": 3.4194090366363525}
+{"epoch": 34, "loss": 0.2312765126267595, "reconstruction_loss": 0.22141514616119945, "kl_loss": 0.1972273305932367, "beta": 0.05, "epsilon": 1.7409369257183047, "duration_seconds": 2.9354968070983887}
+{"epoch": 35, "loss": 0.23078933211992372, "reconstruction_loss": 0.22107622725681417, "kl_loss": 0.19426212670668117, "beta": 0.05, "epsilon": 1.7678643481978416, "duration_seconds": 3.1424853801727295}
+{"epoch": 36, "loss": 0.2318408305516432, "reconstruction_loss": 0.22212098548760684, "kl_loss": 0.19439684612691394, "beta": 0.05, "epsilon": 1.7947917706773788, "duration_seconds": 2.5945560932159424}
+{"epoch": 37, "loss": 0.23076492403395413, "reconstruction_loss": 0.2204991408756801, "kl_loss": 0.20531563424678503, "beta": 0.05, "epsilon": 1.8214147764065785, "duration_seconds": 3.0895133018493652}
+{"epoch": 38, "loss": 0.22986912706634718, "reconstruction_loss": 0.21941599654421978, "kl_loss": 0.20906263265571615, "beta": 0.05, "epsilon": 1.8477349352805872, "duration_seconds": 3.015350341796875}
+{"epoch": 39, "loss": 0.23001934766525212, "reconstruction_loss": 0.21928734452132684, "kl_loss": 0.21464006287850548, "beta": 0.05, "epsilon": 1.8737618620531802, "duration_seconds": 2.4103150367736816}
+{"epoch": 40, "loss": 0.22983035907513752, "reconstruction_loss": 0.21906174760364724, "kl_loss": 0.21537222225319042, "beta": 0.05, "epsilon": 1.899503524998805, "duration_seconds": 2.411452293395996}
+{
+  "status": "completed",
+  "algorithm": "DP-CVAE",
+  "dataset": "MNIST digit 8",
+  "dataset_size": 5851,
+  "target_digit": 8,
+  "epochs": 40,
+  "batch_size": 128,
+  "latent_size": 64,
+  "beta": 0.05,
+  "epsilon": 1.899503524998805,
+  "delta": 1e-05,
+  "noise_multiplier": 2.255859375,
+  "total_duration_seconds": 114.72704243659973,
+  "final_training_metrics": {
+    "epoch": 40,
+    "loss": 0.22983035907513752,
+    "reconstruction_loss": 0.21906174760364724,
+    "kl_loss": 0.21537222225319042,
+    "beta": 0.05,
+    "epsilon": 1.899503524998805,
+    "duration_seconds": 2.411452293395996
+  }
+}
