@@ -1,0 +1,24 @@
+{
+  "status": "completed",
+  "algorithm": "DP-CVAE",
+  "dataset": "MNIST digits 0-9",
+  "dataset_size": 60000,
+  "target_digit": null,
+  "epochs": 30,
+  "batch_size": 256,
+  "latent_size": 64,
+  "beta": 0.05,
+  "epsilon": 7.999701056445725,
+  "delta": 1e-05,
+  "noise_multiplier": 0.61614990234375,
+  "total_duration_seconds": 987.6987087726593,
+  "final_training_metrics": {
+    "epoch": 30,
+    "loss": 0.16577240504873206,
+    "reconstruction_loss": 0.14247849407576033,
+    "kl_loss": 0.46587824430841746,
+    "beta": 0.05,
+    "epsilon": 7.999701056445725,
+    "duration_seconds": 47.83649921417236
+  }
+}

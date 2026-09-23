@@ -1,9 +1,45 @@
 # 实验八：差分隐私生成模型
 
-本项目完成课程实验八的必做任务，并实现了面向完整 MNIST 0–9 的 DP-WGAN 改进。仓库只保留两组正式结果：
+本项目完成实验八的必做任务，并在统一的 MNIST 数据、随机种子和评估流程下实现三组扩展实验：
 
-- **必做内容**：DP-SGD + DCGAN，生成数字 8。
-- **改进内容**：DP-ACWGAN-CP，条件生成数字 0–9，并解决类别模式坍缩。
+1. **必做**：DP-SGD + DCGAN，训练并生成数字 8。
+2. **改进 1**：DP-ACWGAN-CP，条件生成完整 MNIST 0–9。
+3. **改进 2**：DP-CVAE，分别训练完整 MNIST 0–9 和单独数字 8。
+4. **改进 3**：DP-WGAN-CP，只训练并生成数字 8。
+
+仓库只归档每项实验最终采用的模型、样本、训练记录和评估结果；调参过程中产生的中间模型保留在本地 `runs/`，不上传 GitHub。
+
+## 结论
+
+### 完整 MNIST 0–9
+
+| 模型 / 评估器 | 标签一致率 ↑ | 稳健覆盖 ↑ | 归一化熵 ↑ | 特征 FID ↓ | ε |
+|---|---:|---:|---:|---:|---:|
+| DP-CVAE / LeNet | 94.91% | 10/10 | 0.9988 | 499.45 | 7.9997 |
+| DP-ACWGAN-CP / LeNet | **100.00%** | **10/10** | **1.0000** | **464.98** | 7.9950 |
+| DP-CVAE / ConvNet | 94.51% | 10/10 | 0.9982 | **334.47** | 7.9997 |
+| DP-ACWGAN-CP / ConvNet | **100.00%** | **10/10** | **1.0000** | 513.57 | 7.9950 |
+
+DP-ACWGAN-CP 的类别控制最好，两套评估器均达到 100% 标签一致率。DP-CVAE 的 ConvNet 特征 FID 更低，但在 LeNet 特征空间中略高，因此不能宣称某个模型在所有图像质量指标上绝对占优。
+
+### 单独数字 8
+
+| 模型 / 评估器 | 数字 8 识别率 ↑ | 平均置信度 ↑ | 特征 FID ↓ | ε | 训练时间 |
+|---|---:|---:|---:|---:|---:|
+| 必做 DP-DCGAN / LeNet | **100.00%** | **99.98%** | 865.36 | **1.9324** | **45.59 s** |
+| DP-CVAE / LeNet | 99.96% | 99.34% | 1124.84 | 7.9944 | 106.53 s |
+| DP-WGAN-CP / LeNet | 97.04% | 97.70% | **309.06** | 7.9985 | 96.36 s |
+| 必做 DP-DCGAN / ConvNet | **100.00%** | 99.84% | 637.83 | **1.9324** | **45.59 s** |
+| DP-CVAE / ConvNet | **100.00%** | **99.88%** | 463.61 | 7.9944 | 106.53 s |
+| DP-WGAN-CP / ConvNet | 98.30% | 97.52% | **140.15** | 7.9985 | 96.36 s |
+
+结论如下：
+
+- **生成分布质量最好**：DP-WGAN-CP。两套评估器的 FID 都最低，ConvNet FID 仅 140.15。
+- **数字 8 识别最稳定**：DP-CVAE 与必做 DP-DCGAN，ConvNet 识别率均为 100%。
+- **隐私更强且训练最少**：必做 DP-DCGAN，ε=1.9324，且只训练 10 轮。注意它和两个改进模型的隐私预算不同，FID 对比不属于完全相同隐私约束下的消融实验。
+
+完整机器可读对比见 `results/comparison.csv`。
 
 ## 目录结构
 
@@ -14,36 +50,37 @@ differential-privacy-dcgan/
 ├── scripts/
 │   └── run_required.ps1
 ├── src/
-│   ├── required/
-│   │   └── train_dp_dcgan.py
-│   └── improved/
-│       ├── dp_wgan_models.py
-│       ├── train_dp_wgan.py
-│       ├── refine_dp_wgan.py
-│       ├── train_mnist_evaluator.py
-│       └── evaluate_dp_wgan.py
+│   ├── required/                 # 必做 DP-DCGAN
+│   ├── improved/                 # 0-9 DP-ACWGAN-CP
+│   └── additional/               # DP-CVAE、数字8 DP-WGAN-CP、统一评估器
 └── results/
-    ├── required/
-    │   ├── model/generator_last.pt
-    │   ├── sample/generated.png
-    │   ├── metrics/training_metrics.csv
-    │   └── summary.json
-    └── improved/
-        ├── model/dp_wgan_refined.pt
-        ├── sample/generated.png
-        ├── evaluators/
-        └── metrics/
+    ├── comparison.csv
+    ├── required/                 # 必做数字8
+    ├── improved/                 # DP-ACWGAN-CP 0-9
+    ├── dp_vae_all/               # DP-CVAE 0-9
+    ├── dp_vae_digit8/            # DP-CVAE 数字8
+    └── dp_wgan_cp_digit8/        # DP-WGAN-CP 数字8
 ```
+
+每个新增实验目录包含：
+
+- `model/`：最终发布模型；
+- `sample/`：最终生成样本；
+- `metrics/training_metrics.csv`：逐轮训练记录；
+- `metrics/training_summary.json`：配置、隐私预算和最终训练指标；
+- `metrics/evaluation_*.json`：LeNet 与 ConvNet 的正式评估；
+- `metrics/class_histogram_*.csv`：预测类别分布；
+- `logs/`：最终训练与评估的标准输出日志；动态进度条 stderr 原始文件仅保留在本地 `runs/`。
 
 ## 环境
 
-本次实际运行环境：
+本次正式运行环境：
 
 - Python 3.10
 - PyTorch 2.4.1 + CUDA 12.4
 - torchvision 0.19.1
 - Opacus 1.5.4
-- NVIDIA GeForce RTX 4060 Laptop GPU
+- NVIDIA GeForce RTX 4060 Laptop GPU 8GB
 
 安装依赖：
 
@@ -51,135 +88,137 @@ differential-privacy-dcgan/
 python -m pip install -r .\requirements.txt
 ```
 
-## 一、必做内容：DP-SGD + DCGAN
+以下命令均在项目根目录执行。数据默认下载到 `data/`，实验过程输出到被 Git 忽略的 `runs/`。
 
-### 原理
+## 一、必做：DP-SGD + DCGAN（数字 8）
 
-判别器读取 MNIST 中的真实数字 8。Opacus 对每条样本的判别器梯度进行裁剪并加入高斯噪声；生成器只通过私有判别器获得训练信号。
+判别器接收真实数字 8 和生成图像。Opacus 对判别器的逐样本梯度裁剪后加入高斯噪声；生成器不直接读取私有数据，只通过私有判别器获得训练信号。
 
-正式配置：
-
-| 项目 | 值 |
-|---|---:|
-| 数据 | MNIST 数字 8，共 5,851 张 |
-| Epoch / Batch | 10 / 64 |
-| 噪声乘数 | 1.0 |
-| 最大逐样本梯度范数 | 1.0 |
-| epsilon / delta | 1.93239 / 1e-5 |
-| 训练时间 | 45.59 秒 |
-
-### 运行
+正式配置：10 epoch、batch size 64、噪声乘数 1.0、最大梯度范数 1.0、ε=1.93239、δ=1e-5。
 
 ```powershell
 .\scripts\run_required.ps1
 ```
 
-或直接执行：
+## 二、DP-ACWGAN-CP（MNIST 0–9）
 
-```powershell
-.\.venv\Scripts\python.exe .\src\required\train_dp_dcgan.py `
-  --data-root .\data `
-  --output-dir .\runs\required `
-  --epochs 10 --batch-size 64 --target-digit 8 `
-  --noise-multiplier 1.0 --max-grad-norm 1.0 `
-  --delta 1e-5 --device cuda
-```
-
-### 必做结果
-
-- 模型：`results/required/model/generator_last.pt`
-- 最终样本：`results/required/sample/generated.png`
-- 训练指标：`results/required/metrics/training_metrics.csv`
-- 配置摘要：`results/required/summary.json`
-
-## 二、改进内容：DP-ACWGAN-CP
-
-### 改进原因
-
-基础方法容易出现类别模式坍缩，因此改进模型引入条件控制、辅助分类与 EMA，以提高类别覆盖和生成稳定性。
-
-主要改进：
-
-1. 使用覆盖完整图像的 Projection Critic。
-2. 增加辅助分类头，直接约束真实图和生成图的类别。
-3. 将 Wasserstein、Critic 分类和 Generator 分类损失权重设为 `0.01 / 1.0 / 2.0`。
-4. WGAN 参数裁剪仅作用于分数分支，避免压制分类头。
-5. 修复 Opacus 多次前向时未使用分类输出导致的逐样本梯度错误。
-6. 使用 EMA Generator。
-7. 使用不读取私有训练样本的公开分类器后处理，并通过不同结构的 ConvNet 交叉验证。
-
-损失函数：
-
-```text
-L_C = 0.01 * (mean(C(fake,y)) - mean(C(real,y)))
-      + CE(class(real), y)
-
-L_G = -0.01 * mean(C(fake,y))
-      + 2.0 * CE(class(fake), y)
-```
-
-### 正式训练
+该模型在 WGAN 权重裁剪基础上加入标签条件、投影判别器、辅助分类头和 EMA 生成器，以解决 0–9 条件生成中的类别模式坍缩。最终模型还使用独立公开分类器进行不访问私有训练样本的后处理，因此额外隐私成本为 0。
 
 ```powershell
 .\.venv\Scripts\python.exe .\src\improved\train_dp_wgan.py `
-  --data-root .\data `
-  --output-dir .\runs\improved `
+  --data-root .\data --output-dir .\runs\improved `
   --epochs 40 --batch-size 128 --latent-size 128 `
-  --generator-features 64 --critic-features 32 `
-  --critic-steps 3 `
+  --generator-features 64 --critic-features 32 --critic-steps 3 `
   --generator-lr 1e-4 --critic-lr 1e-4 `
   --wasserstein-weight 0.01 `
   --critic-class-weight 1.0 --generator-class-weight 2.0 `
   --weight-clip 0.02 --max-grad-norm 1.0 `
-  --target-epsilon 8 --delta 1e-5 `
-  --ema-decay 0.99 --save-every 5 --device cuda
+  --target-epsilon 8 --delta 1e-5 --ema-decay 0.99 --device cuda
 ```
 
-正式 DP 训练耗时 1112.25 秒，最终隐私预算为：
+正式运行：40 epoch，ε=7.99499，训练 1112.29 秒。
+
+## 三、DP-CVAE
+
+### 算法原理
+
+编码器学习近似后验 `q(z|x,y)`，通过重参数化得到潜变量，解码器学习 `p(x|z,y)`。本实现使用类别条件高斯先验，使不同标签在潜空间中具有可分离的中心。优化目标为：
 
 ```text
-epsilon = 7.994994171548938
-delta   = 1e-5
-sigma   = 0.576934814453125
+L = BCE(x_reconstructed, x) + beta * KL(q(z|x,y) || p(z|y))
 ```
-### 评估
+
+Opacus 对编码器、解码器和标签条件参数统一执行 DP-SGD。训练采用 KL warm-up、EMA 和 ghost clipping；每轮原子写入恢复点，正常完成后只保留最终发布模型。
+
+### 完整 0–9
 
 ```powershell
-.\.venv\Scripts\python.exe .\src\improved\evaluate_dp_wgan.py `
-  --checkpoint .\results\improved\model\dp_wgan_refined.pt `
-  --evaluator-checkpoint .\results\improved\evaluators\lenet_mnist_best.pt `
-  --data-root .\data `
-  --output-dir .\runs\evaluation `
+.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+  --data-root .\data --output-dir .\runs\dp_vae_all `
+  --epochs 30 --batch-size 256 --grad-sample-mode ghost `
+  --latent-size 64 --features 32 --prior-scale 10 `
+  --learning-rate 0.001 --beta 0.05 --kl-warmup-epochs 8 `
+  --ema-decay 0.99 --target-epsilon 8 --delta 1e-5 `
+  --max-grad-norm 1 --seed 2026 --device cuda
+```
+
+正式运行：30 epoch，ε=7.99970，训练 987.70 秒。
+
+### 单独数字 8
+
+```powershell
+.\.venv\Scripts\python.exe .\src\additional\train_dp_vae.py `
+  --data-root .\data --output-dir .\runs\dp_vae_digit8 `
+  --target-digit 8 --epochs 40 --batch-size 128 `
+  --grad-sample-mode ghost --latent-size 64 --features 32 `
+  --prior-scale 10 --learning-rate 0.001 --beta 0.05 `
+  --kl-warmup-epochs 8 --ema-decay 0.99 `
+  --target-epsilon 8 --delta 1e-5 --max-grad-norm 1 `
+  --seed 2026 --device cuda
+```
+
+正式运行：40 epoch，ε=7.99443，训练 106.53 秒。
+
+## 四、DP-WGAN-CP（数字 8）
+
+Critic 使用 Wasserstein 距离替代二元交叉熵，并通过参数裁剪满足近似 Lipschitz 约束。DP-SGD 只作用于读取私有数字 8 的 Critic；生成器通过 Critic 的输出间接学习，因此隐私保证经后处理性质传递给生成器。
+
+```powershell
+.\.venv\Scripts\python.exe .\src\additional\train_dp_wgan_cp_digit8.py `
+  --data-root .\data --output-dir .\runs\dp_wgan_cp_digit8 `
+  --target-digit 8 --epochs 50 --batch-size 128 `
+  --latent-size 128 --generator-features 64 --critic-features 32 `
+  --generator-lr 0.0001 --critic-lr 0.00005 `
+  --critic-steps 3 --weight-clip 0.02 --ema-decay 0.99 `
+  --target-epsilon 8 --delta 1e-5 --max-grad-norm 1 `
+  --seed 2026 --device cuda
+```
+
+正式运行：50 epoch，ε=7.99852，训练 96.36 秒。
+
+## 五、统一评估流程
+
+正式评估均生成 10,000 张图像，随机种子为 2026，并分别使用 LeNet 与独立 ConvNet。0–9 模型的 FID 参考 10,000 张 MNIST 测试图；数字 8 模型参考测试集中全部 974 张数字 8。
+
+以数字 8 的 DP-WGAN-CP 和 ConvNet 为例：
+
+```powershell
+.\.venv\Scripts\python.exe .\src\additional\evaluate_generator.py `
+  --checkpoint .\results\dp_wgan_cp_digit8\model\dp_wgan_cp_digit8_final.pt `
+  --model-type dp_wgan_cp --task single --target-digit 8 `
+  --evaluator-checkpoint .\results\improved\evaluators\convnet_mnist_best.pt `
+  --data-root .\data --output-dir .\runs\evaluation `
   --num-samples 10000 --num-real 10000 `
   --batch-size 256 --device cuda
 ```
 
-### 改进结果
-
-所有指标使用 10,000 张生成样本、10,000 张真实测试样本和随机种子 2026。
-
-| 模型 / 评估器 | 条件一致性 | 稳健覆盖 | 归一化熵 | 特征 FID |
-|---|---:|---:|---:|---:|
-| 最终改进 / LeNet | **100.00%** | **10/10** | **1.0000** | **464.98** |
-| 最终改进 / 独立 ConvNet | **100.00%** | **10/10** | **1.0000** | **513.57** |
-
-LeNet 真实测试准确率为 99.19%，独立 ConvNet 为 98.72%。不同评估器使用的特征空间不同，因此两种 FID 不能直接横向比较。
-
-改进结果文件：
-
-- 最终模型：`results/improved/model/dp_wgan_refined.pt`
-- 最终样本：`results/improved/sample/generated.png`
-- LeNet 指标：`results/improved/metrics/evaluation_lenet.json`
-- ConvNet 交叉指标：`results/improved/metrics/evaluation_convnet.json`
-- 类别分布：`results/improved/metrics/class_histogram_lenet.csv`、`class_histogram_convnet.csv`
-- 评估器：`results/improved/evaluators/lenet_mnist_best.pt`、`convnet_mnist_best.pt`
-
-## 指标说明
+### 指标说明
 
 | 指标 | 含义 |
 |---|---|
-| `class_consistency_accuracy` | 评估器预测与请求标签一致的比例 |
-| `robust_class_coverage_at_1_percent` | 生成占比至少 1% 的类别数量 |
-| `normalized_class_distribution_entropy` | 类别分布均衡程度，越接近 1 越好 |
-| `feature_fid` | 同一评估器特征空间中的生成分布距离，越低越好 |
-| `epsilon` | 给定 delta 下的累计隐私损失 |
+| 标签一致率 / 数字 8 识别率 | 生成标签与评估器预测一致的比例，越高越好 |
+| 平均置信度 | 评估器对生成样本预测的平均最大概率，越高越好 |
+| 稳健类别覆盖 | 生成占比至少 1% 的类别数量；仅适合 0–9 条件生成 |
+| 归一化类别熵 | 预测类别分布的均衡程度；仅适合 0–9 条件生成 |
+| 特征 FID | 评估器特征空间中的生成分布与真实分布距离，越低越好 |
+| ε、δ | 差分隐私预算；在相同 δ 下，ε 越小隐私越强 |
+
+FID 只能在相同任务、相同评估器、相同预处理和样本数量下比较。LeNet FID 与 ConvNet FID 使用不同特征空间，不能直接互相比较。
+
+## 最终样本
+
+DP-CVAE（0–9）：
+
+![DP-CVAE MNIST 0-9](results/dp_vae_all/sample/generated.png)
+
+必做 DP-DCGAN（数字 8）：
+
+![DP-DCGAN digit 8](results/required/sample/generated.png)
+
+DP-CVAE（数字 8）：
+
+![DP-CVAE digit 8](results/dp_vae_digit8/sample/generated.png)
+
+DP-WGAN-CP（数字 8）：
+
+![DP-WGAN-CP digit 8](results/dp_wgan_cp_digit8/sample/generated.png)
