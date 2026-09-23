@@ -10,7 +10,6 @@
 ```text
 differential-privacy-dcgan/
 ├── README.md
-├── Assignment.ipynb
 ├── requirements.txt
 ├── scripts/
 │   └── run_required.ps1
@@ -25,7 +24,15 @@ differential-privacy-dcgan/
 │       └── evaluate_dp_wgan.py
 └── results/
     ├── required/
+    │   ├── model/generator_last.pt
+    │   ├── sample/generated.png
+    │   ├── metrics/training_metrics.csv
+    │   └── summary.json
     └── improved/
+        ├── model/dp_wgan_refined.pt
+        ├── sample/generated.png
+        ├── evaluators/
+        └── metrics/
 ```
 
 ## 环境
@@ -89,7 +96,7 @@ python -m pip install -r .\requirements.txt
 
 ### 改进原因
 
-原 DP-WGAN 结果发生严重模式坍缩：条件一致性仅 10.05%，稳健类别覆盖为 2/10，大部分样本被识别为数字 8 或 9。
+基础方法容易出现类别模式坍缩，因此改进模型引入条件控制、辅助分类与 EMA，以提高类别覆盖和生成稳定性。
 
 主要改进：
 
@@ -153,11 +160,10 @@ sigma   = 0.576934814453125
 
 | 模型 / 评估器 | 条件一致性 | 稳健覆盖 | 归一化熵 | 特征 FID |
 |---|---:|---:|---:|---:|
-| 原始旧模型 / LeNet | 10.05% | 2/10 | 0.0402 | 2793.31 |
-| DP 第 40 轮 / LeNet | 81.90% | 9/10 | 0.8876 | 565.36 |
 | 最终改进 / LeNet | **100.00%** | **10/10** | **1.0000** | **464.98** |
-| DP 第 40 轮 / 独立 ConvNet | 97.97% | 10/10 | 0.9982 | 531.51 |
 | 最终改进 / 独立 ConvNet | **100.00%** | **10/10** | **1.0000** | **513.57** |
+
+LeNet 真实测试准确率为 99.19%，独立 ConvNet 为 98.72%。不同评估器使用的特征空间不同，因此两种 FID 不能直接横向比较。
 
 改进结果文件：
 
@@ -165,7 +171,8 @@ sigma   = 0.576934814453125
 - 最终样本：`results/improved/sample/generated.png`
 - LeNet 指标：`results/improved/metrics/evaluation_lenet.json`
 - ConvNet 交叉指标：`results/improved/metrics/evaluation_convnet.json`
-- 训练记录：`results/improved/metrics/training_metrics.csv`
+- 类别分布：`results/improved/metrics/class_histogram_lenet.csv`、`class_histogram_convnet.csv`
+- 评估器：`results/improved/evaluators/lenet_mnist_best.pt`、`convnet_mnist_best.pt`
 
 ## 指标说明
 
