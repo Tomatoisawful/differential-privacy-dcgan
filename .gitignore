@@ -1,2 +1,7 @@
 .idea/
 .git/
+.venv/
+data/
+runs/
+__pycache__/
+.ipynb_checkpoints/
