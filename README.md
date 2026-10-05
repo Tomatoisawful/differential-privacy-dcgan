@@ -118,10 +118,12 @@ python -m pip install -r .\requirements.txt
 
 - 浅克隆本仓库，并使用 Colab 预装的 CUDA 版 PyTorch；
 - 安装 Opacus，把 MNIST、模型、逐轮断点、日志和评估结果保存到 `Google Drive/MyDrive/differential-privacy-dcgan-colab/`；
-- 将 DP-DCGAN 增至 30 轮、数字 8 DP-CVAE 增至 80 轮、数字 8 DP-WGAN-CP 增至 100 轮、完整 0–9 DP-CVAE 增至 60 轮、完整 0–9 DP-ACWGAN-CP 增至 80 轮；
+- 将 DP-DCGAN、数字 8 DP-CVAE、数字 8 DP-WGAN-CP、完整 0–9 DP-CVAE 和完整 0–9 DP-ACWGAN-CP 全部统一训练 100 轮；
 - 对完成的模型分别执行 LeNet 与 ConvNet 的 10,000 样本统一评估。
 
 Notebook 的配置单元可以关闭不需要的模型。DP-CVAE 和数字 8 DP-WGAN-CP 每轮保存断点，Colab 断线后重新运行可继续；DP-DCGAN 和完整 0–9 DP-ACWGAN-CP 暂不支持断点续训。单卡环境应顺序运行，避免多个隐私模型并发占用 GPU。README 当前表格是仓库中已完成正式实验的结果；Colab 长训完成后，以 Drive 中新生成的 `evaluation_metrics.json` 为准，再决定是否替换正式结果。
+
+为使 100 轮 DP-DCGAN 仍满足 ε<2，Colab 配置把其噪声乘数重新校准为 `2.32421875`；在 5,851 个数字 8、batch size 64、δ=1e-5 的设置下，预期最终 ε约为 1.9。其余使用 `--target-epsilon` 的脚本会根据 100 轮训练自动重新校准噪声。
 
 如果出现 `ValueError: mount failed`，说明 Google Drive 授权没有完成，并非模型代码错误。请允许 `colab.research.google.com` 的弹窗和第三方 Cookie，断开并删除当前运行时后重新连接；也可以点击 Colab 左侧“文件”面板中的“装载 Google 云端硬盘”，成功后重新运行第 2、3 单元。Notebook 默认拒绝在未挂载 Drive 时开始长训，防止断线后模型和日志丢失。
 
