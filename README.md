@@ -1,5 +1,7 @@
 # 实验八：差分隐私生成模型
 
+[![在 Google Colab 中打开](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Tomatoisawful/differential-privacy-dcgan/blob/main/notebooks/colab_retrain.ipynb)
+
 本项目完成实验八的必做任务，并在统一的 MNIST 数据、随机种子和评估流程下实现三组扩展实验：
 
 1. **必做**：DP-SGD + DCGAN，训练并生成数字 8。
@@ -61,6 +63,8 @@ differential-privacy-dcgan/
 ├── requirements.txt
 ├── references/                  # 课程资料与差分隐私参考 PDF
 ├── data/                        # MNIST 数据（Git 忽略）
+├── notebooks/
+│   └── colab_retrain.ipynb      # Colab 长轮次训练、续训与评估
 ├── runs/                        # 调参与临时输出（Git 忽略）
 ├── scripts/
 │   └── run_required.ps1
@@ -107,6 +111,17 @@ differential-privacy-dcgan/
 ```powershell
 python -m pip install -r .\requirements.txt
 ```
+
+## Google Colab 长轮次训练
+
+点击上方“在 Google Colab 中打开”徽章，选择 GPU 运行时后从上到下执行 Notebook。Notebook 会自动：
+
+- 浅克隆本仓库，并使用 Colab 预装的 CUDA 版 PyTorch；
+- 安装 Opacus，把 MNIST、模型、逐轮断点、日志和评估结果保存到 `Google Drive/MyDrive/differential-privacy-dcgan-colab/`；
+- 将 DP-DCGAN 增至 30 轮、数字 8 DP-CVAE 增至 80 轮、数字 8 DP-WGAN-CP 增至 100 轮、完整 0–9 DP-CVAE 增至 60 轮、完整 0–9 DP-ACWGAN-CP 增至 80 轮；
+- 对完成的模型分别执行 LeNet 与 ConvNet 的 10,000 样本统一评估。
+
+Notebook 的配置单元可以关闭不需要的模型。DP-CVAE 和数字 8 DP-WGAN-CP 每轮保存断点，Colab 断线后重新运行可继续；DP-DCGAN 和完整 0–9 DP-ACWGAN-CP 暂不支持断点续训。单卡环境应顺序运行，避免多个隐私模型并发占用 GPU。README 当前表格是仓库中已完成正式实验的结果；Colab 长训完成后，以 Drive 中新生成的 `evaluation_metrics.json` 为准，再决定是否替换正式结果。
 
 ## 一、必做：DP-SGD + DCGAN（数字 8）
 
